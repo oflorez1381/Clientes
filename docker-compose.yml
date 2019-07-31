@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=test
+      - MYSQL_DATABASE=test_db
+      - MYSQL_PASSWORD=test_pass
+    ports:
+      - 3306:3306
+    volumes:
+      - "/Users/oflorezdiaz/Documents/dockerData/mysql/mysql8:/var/lib/mysql"
+    networks:
+      - backend_network
+  backend:
+    build:
+      context: ./clientes-backend
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=container
+    ports:
+      - 8080:8080
+    restart: on-failure:10
+    depends_on:
+      - db
+    networks:
+      - backend_network
+      - frontend_network
+  frontend:
+    build:
+      context: ./clientes-frontend
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+    restart: on-failure:10
+    depends_on:
+      - backend
+    networks:
+      - frontend_network
+
+networks:
+  backend_network:
+  frontend_network:
+
