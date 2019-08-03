@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Cliente} from './cliente';
 import {ClienteService} from './cliente.service';
 import swal from 'sweetalert2';
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-clientes',
@@ -15,9 +16,12 @@ export class ClientesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clienteService.getClientes().subscribe(
-      clientes => this.clientes = clientes
-    );
+    // this.clienteService.getClientes().subscribe(
+    //   clientes => this.clientes = clientes
+    // );
+    this.clienteService.getClientes().pipe(
+        tap(clientes => this.clientes = clientes)
+      ).subscribe();
   }
 
 //    "sweetalert2": "^7.26.9",
