@@ -1,6 +1,9 @@
 package com.odfd.spring.boot.backend.apirest.models.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,10 +14,18 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
+    @Size(min = 4, max = 12)
+    @NotEmpty
     private String nombre;
+
+    @NotEmpty
     private String apellido;
+
     @Column(nullable = false, unique = true)
+    @NotEmpty
+    @Email
     private String email;
 
     @Column(name = "created_at")
