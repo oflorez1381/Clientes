@@ -18,16 +18,16 @@ export class ClienteService {
 
   constructor(private httpCliente: HttpClient, private router: Router) { }
 
-  getClientes(): Observable<Cliente[]> {
-    return this.httpCliente.get<Cliente[]>(this.urlEndpoint).pipe(
-      tap(response => {
-        const clientes = response as Cliente[];
+  getClientes(page: number): Observable<any> {
+    return this.httpCliente.get<Cliente[]>(this.urlEndpoint + '/page' + page).pipe(
+      tap((response: any) => {
+        const clientes = response.content as Cliente[];
         clientes.forEach(cliente => {
           console.log(cliente);
         });
       }),
-      map( response => {
-        const clientes = response as Cliente[];
+      map( (response: any) => {
+        const clientes = response.content as Cliente[];
         return clientes.map(cliente => {
           const datePipe = new DatePipe('en-US');
           cliente.nombre = cliente.nombre.toUpperCase();
@@ -37,9 +37,9 @@ export class ClienteService {
           return cliente;
         });
       }),
-      tap(response => {
-        // const clientes = response as Cliente[];
-        response.forEach(cliente => {
+      tap((response: any) => {
+        const clientes = response.content as Cliente[];
+        clientes.forEach(cliente => {
           console.log(cliente);
         });
       }),

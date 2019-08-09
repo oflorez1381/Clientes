@@ -3,6 +3,8 @@ package com.odfd.spring.boot.backend.apirest.controller;
 import com.odfd.spring.boot.backend.apirest.models.entity.Cliente;
 import com.odfd.spring.boot.backend.apirest.models.service.ClienteService;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,11 @@ public class ClienteRestController {
     @GetMapping
     public List<Cliente> index() {
         return clienteService.findAll();
+    }
+
+    @GetMapping("/page/{page}")
+    public Page<Cliente> index(@PathVariable Integer page) {
+        return clienteService.findAll(PageRequest.of(page,4));
     }
 
     @GetMapping("/{id}")
