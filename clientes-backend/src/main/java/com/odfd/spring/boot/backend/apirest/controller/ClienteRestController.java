@@ -133,6 +133,11 @@ public class ClienteRestController {
         Map<String, Object> response = new HashMap<>();
 
         try {
+            Cliente cliente = clienteService.findById(id);
+
+            if (deleteFoto(response, cliente))
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
             clienteService.delete(id);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar el cliente en la base de datos");
@@ -142,6 +147,22 @@ public class ClienteRestController {
 
         response.put("mensaje", "El cliente ha sido eliminado con exito");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    private boolean deleteFoto(Map<String, Object> response, Cliente cliente) {
+        String clienteFotoAnterior = cliente.getFoto();
+
+        if (clienteFotoAnterior != null && !clienteFotoAnterior.isEmpty()) {
+            Path rutaFotoAnterior = Paths.get("uploads").resolve(clienteFotoAnterior).toAbsolutePath();
+            try {
+                Files.delete(rutaFotoAnterior);
+            } catch (IOException e) {
+                response.put("mensaje", "Error al borrar la imagen " + clienteFotoAnterior);
+                response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostMapping("/upload")
@@ -160,6 +181,9 @@ public class ClienteRestController {
                 response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
                 return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
             }
+
+            if (deleteFoto(response, cliente))
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
             cliente.setFoto(nombreArchivo);
             clienteService.save(cliente);
