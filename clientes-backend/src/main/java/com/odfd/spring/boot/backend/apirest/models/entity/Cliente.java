@@ -3,6 +3,7 @@ package com.odfd.spring.boot.backend.apirest.models.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,19 +24,22 @@ public class Cliente implements Serializable {
     @NotEmpty
     private String apellido;
 
-    @Column(nullable = false, unique = true)
     @NotEmpty
+    @Column(nullable = false, unique = true)
     @Email
     private String email;
 
+    @NotNull
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
-    @PrePersist
-    public void prePersist() {
-        createAt = new Date();
-    }
+    private String foto;
+
+//    @PrePersist
+//    public void prePersist() {
+//        createAt = new Date();
+//    }
 
     public Long getId() {
         return id;
@@ -75,5 +79,13 @@ public class Cliente implements Serializable {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
