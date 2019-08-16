@@ -2,6 +2,8 @@ package com.odfd.spring.boot.backend.apirest.controller;
 
 import com.odfd.spring.boot.backend.apirest.models.entity.Cliente;
 import com.odfd.spring.boot.backend.apirest.models.service.ClienteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 public class ClienteRestController {
 
     private ClienteService clienteService;
+
+    private final Logger log = LoggerFactory.getLogger(ClienteRestController.class);
 
     public ClienteRestController(ClienteService clienteService) {
         this.clienteService = clienteService;
@@ -178,6 +182,7 @@ public class ClienteRestController {
         if (!archivo.isEmpty()){
             String nombreArchivo = UUID.randomUUID().toString() + "_" +archivo.getOriginalFilename().trim();
             Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
+            log.info(rutaArchivo.toString());
             try {
                 Files.copy(archivo.getInputStream(), rutaArchivo);
             } catch (IOException e) {
@@ -202,6 +207,8 @@ public class ClienteRestController {
     @GetMapping("/upload/img/{nombreFoto:.+}")
     public ResponseEntity<?> getImagen(@PathVariable String nombreFoto){
         Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
+        log.info(rutaArchivo.toString());
+
         Resource recurso = null;
 
         try {
