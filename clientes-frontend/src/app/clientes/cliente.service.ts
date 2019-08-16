@@ -93,4 +93,19 @@ export class ClienteService {
       })
     );
   }
+
+  subirFoto(archivo: File, id): Observable<Cliente> {
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    formData.append('id', id);
+
+    return this.httpCliente.post(`${this.urlEndpoint}/upload`, formData).pipe(
+      map( (response: any) => response.cliente as Cliente),
+      catchError( err => {
+        console.log(err.error.mensaje);
+        swal.fire('Error al subir la foto del cliente', err.error.mensaje, 'error');
+        return throwError(err);
+      })
+    );
+  }
 }
