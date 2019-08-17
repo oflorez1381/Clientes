@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Cliente} from '../cliente';
 import {ClienteService} from '../cliente.service';
 import {ActivatedRoute} from '@angular/router';
@@ -13,7 +13,7 @@ import {HttpEventType} from '@angular/common/http';
 export class DetalleComponent implements OnInit {
 
   titulo = 'Detalle del cliente';
-  cliente: Cliente;
+  @Input() cliente: Cliente;
   private fotoSeleccionada: File;
   progreso = 0;
 
