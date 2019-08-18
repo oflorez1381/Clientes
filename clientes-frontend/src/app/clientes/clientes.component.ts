@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Cliente} from './cliente';
 import {ClienteService} from './cliente.service';
-import { ModalService } from './detalle/modal.service';
+import {ModalService} from './detalle/modal.service';
 import swal from 'sweetalert2';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
@@ -25,20 +25,29 @@ export class ClientesComponent implements OnInit {
     // this.clienteService.getClientes().subscribe(
     //   clientes => this.clientes = cliente
     // );
-    // this.activatedRoute.paramMap.subscribe(params => {
-    //   let page = +params.get('page');
-    //
-    //   if (!page) {
-    //     page = 0;
-    //   }
-    //
-    //   this.clienteService.getClientes(page).pipe(
-    //       tap(response => {
-    //         this.clientes = response.content as Cliente[];
-    //         this.paginador = response;
-    //       })
-    //     ).subscribe();
-    //   });
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page = +params.get('page');
+
+      if (!page) {
+        page = 0;
+      }
+
+      this.clienteService.getClientes(page).pipe(
+        tap(response => {
+          this.clientes = response.content as Cliente[];
+          this.paginador = response;
+        })
+      ).subscribe();
+    });
+
+    this.modalService.notificarUpload.subscribe(cliente => {
+      this.clientes = this.clientes.map(clienteOriginal => {
+        if (cliente.id === clienteOriginal.id){
+          clienteOriginal.foto = cliente.foto;
+        }
+        return clienteOriginal;
+      });
+    });
   }
 
 //    "sweetalert2": "^7.26.9",

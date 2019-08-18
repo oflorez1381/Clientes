@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 export class ModalService {
 
   private abierto = false;
+
+  // tslint:disable-next-line:variable-name
+  private _notificarUpload = new EventEmitter<any>();
 
   constructor() { }
 
@@ -17,5 +20,8 @@ export class ModalService {
   }
   estaAbierto(): boolean {
     return this.abierto;
+  }
+  get notificarUpload(): EventEmitter<any> {
+    return this._notificarUpload;
   }
 }
