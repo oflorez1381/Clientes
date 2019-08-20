@@ -20,31 +20,32 @@ export class ClienteService {
   }
 
   getClientes(page: number): Observable<any> {
-    return this.httpCliente.get<Cliente[]>(this.urlEndpoint + '/page' + page).pipe(
-      tap((response: any) => {
-        const clientes = response.content as Cliente[];
-        clientes.forEach(cliente => {
-          console.log(cliente);
-        });
-      }),
-      map((response: any) => {
-        const clientes = response.content as Cliente[];
-        return clientes.map(cliente => {
-          const datePipe = new DatePipe('en-US');
-          cliente.nombre = cliente.nombre.toUpperCase();
-          // cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'en-US');
-          // cliente.createAt = datePipe.transform(cliente.createAt, 'dd/MM/yyyy');
-          // cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy');
-          return cliente;
-        });
-      }),
-      tap((response: any) => {
-        const clientes = response.content as Cliente[];
-        clientes.forEach(cliente => {
-          console.log(cliente);
-        });
-      }),
-    );
+    return this.httpCliente.get<Cliente[]>(this.urlEndpoint + '/page/' + page);
+    // return this.httpCliente.get<Cliente[]>(this.urlEndpoint + '/page/' + page).pipe(
+    //   tap((response: any) => {
+    //     const clientes = response.content as Cliente[];
+    //     clientes.forEach(cliente => {
+    //       console.log(cliente);
+    //     });
+    //   }),
+    //   map((response: any) => {
+    //     const clientes = response.content as Cliente[];
+    //     return clientes.map(cliente => {
+    //       const datePipe = new DatePipe('en-US');
+    //       cliente.nombre = cliente.nombre.toUpperCase();
+    //       // cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'en-US');
+    //       // cliente.createAt = datePipe.transform(cliente.createAt, 'dd/MM/yyyy');
+    //       // cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy');
+    //       return cliente;
+    //     });
+    //   }) ,
+      // tap((response: any) => {
+      //   const clientes = response.content as Cliente[];
+      //   clientes.forEach(cliente => {
+      //     console.log(cliente);
+      //   });
+      // }),
+    // );
   }
 
   create(cliente: Cliente): Observable<Cliente> {

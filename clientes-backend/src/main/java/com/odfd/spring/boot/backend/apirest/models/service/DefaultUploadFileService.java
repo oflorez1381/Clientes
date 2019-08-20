@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class DefaultUploadFileService implements UploadFileService {
 
-    public static final String DIRECTORIO_UPLOADS = "uploads";
+    public static final String DIRECTORIO_UPLOADS = "clientes-backend/uploads";
 
     private final Logger log = LoggerFactory.getLogger(DefaultUploadFileService.class);
 
