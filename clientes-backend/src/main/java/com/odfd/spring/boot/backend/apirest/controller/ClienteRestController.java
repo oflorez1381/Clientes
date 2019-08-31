@@ -3,8 +3,6 @@ package com.odfd.spring.boot.backend.apirest.controller;
 import com.odfd.spring.boot.backend.apirest.models.entity.Cliente;
 import com.odfd.spring.boot.backend.apirest.models.service.ClienteService;
 import com.odfd.spring.boot.backend.apirest.models.service.UploadFileService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -12,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +47,7 @@ public class ClienteRestController {
         return clienteService.findAll(PageRequest.of(page,4));
     }
 
+    @Secured({"ROLE_ADMIN","ROLE_USER"})
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
 
@@ -69,6 +69,7 @@ public class ClienteRestController {
         return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result) {
         Cliente nuevoCliente = null;
@@ -96,6 +97,7 @@ public class ClienteRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result, @PathVariable Long id) {
 
@@ -135,6 +137,7 @@ public class ClienteRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
 
@@ -155,6 +158,7 @@ public class ClienteRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN","ROLE_USER"})
     @PostMapping("/upload")
     public ResponseEntity<?> upload( @RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
         Map<String, Object> response = new HashMap<>();
