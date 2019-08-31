@@ -49,6 +49,7 @@ public class DefaultUsuarioService implements UserDetailsService, UsuarioService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Usuario findByUsername(String username) {
         return usuarioRepository.findByUsername(username);
     }

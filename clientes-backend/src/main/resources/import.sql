@@ -13,8 +13,8 @@ INSERT INTO clientes (nombre, apellido, email, created_at, foto) VALUES ('Angie'
 -- INSERT INTO regiones (id, nombre) VALUES (7, 'Oceanía');
 -- INSERT INTO regiones (id, nombre) VALUES (8, 'Antártica');
 
-INSERT INTO usuarios (username,password,enabled) VALUES ('oscar','$2a$10$E9o7Kj9iVxekVg9VjNgfteiVwaA6zL.S1mQWA8d6ZLl2n51jmkxG.',1);
-INSERT INTO usuarios (username,password,enabled) VALUES ('admin','$2a$10$S4pspiz1.ICXFOfCsqdj8uJ4rVA3XnLT4tuzCJ26HBXtvYMONU/pm',1);
+INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) VALUES ('oflorez','$2a$10$E9o7Kj9iVxekVg9VjNgfteiVwaA6zL.S1mQWA8d6ZLl2n51jmkxG.',1,'oscar','florez','oscarflorez1381@gmail.com');
+INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) VALUES ('admin','$2a$10$S4pspiz1.ICXFOfCsqdj8uJ4rVA3XnLT4tuzCJ26HBXtvYMONU/pm',1,'admin','admin','admin@gmail.com');
 
 INSERT INTO roles (nombre) VALUES ('ROLE_USER');
 INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
