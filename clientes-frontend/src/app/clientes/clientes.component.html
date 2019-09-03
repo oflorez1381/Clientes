@@ -28,10 +28,10 @@
       <tbody>
       <tr *ngFor="let cliente of clientes">
         <td>
-          <img *ngIf="cliente?.foto" src="http://localhost:8080/api/clientes/upload/img/{{ cliente.foto }}"
+          <img *ngIf="cliente?.foto" src="http://localhost:8081/api/clientes/upload/img/{{ cliente.foto }}"
                alt="{{ cliente.foto }}" class="img-thumbnail rounded" (click)="abrirModal(cliente)"
                style="width: 64px; cursor: pointer">
-          <img *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png"
+          <img *ngIf="!cliente?.foto" src="http://localhost:8081/images/no-usuario.png"
                alt="Sin foto" class="img-thumbnail rounded" (click)="abrirModal(cliente)"
                style="width: 64px; cursor: pointer">
         </td>

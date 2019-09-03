@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 })
 export class ClienteService {
 
-  private urlEndpoint = 'http://localhost:8080/api/clientes';
+  private urlEndpoint = 'http://localhost:8081/api/clientes';
 
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
